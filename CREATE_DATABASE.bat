@@ -1,1 +1,0 @@
-.\java-docker-deployment.jar 
