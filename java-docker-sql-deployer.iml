@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.googlecode.lanterna:lanterna:3.0.2" level="project" />
+    <orderEntry type="library" name="net.lingala.zip4j:zip4j:2.7.0" level="project" />
   </component>
 </module>

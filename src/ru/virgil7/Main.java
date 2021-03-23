@@ -8,12 +8,16 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import net.lingala.zip4j.ZipFile;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -21,6 +25,8 @@ import static ru.virgil7.CommandsExecutor.executeCommand;
 
 public class Main {
 
+    public static final String DEPLOY_PATH = "./deploy";
+    public static final String COMPRESSED_SCRIPTS_ZIP = "/compressed_scripts.zip";
     private static Terminal terminal;
     private static MultiWindowTextGUI multiWindowTextGUI;
     private static TextBox nameTextBox;
@@ -32,8 +38,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        new ZipFile(DEPLOY_PATH + COMPRESSED_SCRIPTS_ZIP).extractAll(DEPLOY_PATH);
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        sqlFiles = getSqlFiles(Paths.get("./deploy"));
+        sqlFiles = getSqlFiles(Paths.get(DEPLOY_PATH));
         System.out.println("Found SQL files " + sqlFiles);
 
         terminal = new DefaultTerminalFactory().createTerminal();
@@ -175,16 +182,5 @@ public class Main {
         return Files.list(dir)
                 .sorted()
                 .collect(Collectors.toList());
-    }
-
-    static class ConnectionData implements Serializable {
-
-        public Set<String> names;
-        public Set<Integer> ports;
-
-        public ConnectionData(Set<String> names, Set<Integer> ports) {
-            this.names = names;
-            this.ports = ports;
-        }
     }
 }
